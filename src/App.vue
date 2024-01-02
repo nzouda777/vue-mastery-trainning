@@ -8,11 +8,12 @@
 <script>
 
 export default {
-  name: 'App',
+  name: 'App'
  
 }
 </script>
 
 <style>
-  @import "assets/style.css"
+  @import "assets/style.css";
 </style>
+
