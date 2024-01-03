@@ -1,13 +1,13 @@
 <template>
 
 <div>
-    <div class="col-large push-top">
+  <div class="col-large push-top">
 
-        <h1>{{ thread.title }}</h1>
-        <post-list :posts="threadPosts" />
+    <h1>{{ thread.title }}</h1>
+    <post-list :posts="threadPosts" />
 
-  
-    </div>
+    <post-editor @save="addPost"/>
+  </div>
 
 </div>
 </template>
@@ -15,11 +15,13 @@
 <script>
 import sourceData from '@/data.json'
 import PostList from '@/components/PostList.vue'
+import PostEditor from '@/components/PostEditor.vue'
 
 export default {
   name: 'ThreadShow',
   components: {
-    PostList
+    PostList,
+    PostEditor
   },
  props:{
     id: {
@@ -30,7 +32,7 @@ export default {
   data () {
     return {
       threads: sourceData.threads,
-      posts: sourceData.posts
+      posts: sourceData.posts,
     }
   },
   
@@ -42,7 +44,17 @@ export default {
       return this.posts.filter(post => post.threadId === this.id )
     }
   },
-  
+  methods: {
+    addPost (eventData) {
+      const post = {
+       ...eventData.post,
+        threadId: this.id,
+      }
+      this.posts.push(post)
+      this.thread.posts.push(post.id)
+
+    }
+  }
 }
 </script>
 
